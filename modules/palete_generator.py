@@ -9,7 +9,7 @@ from motor.generate_harmony import (
     monochromatic_colors
 )
 
-st.title("Gerador de Paleta de Cores")
+st.title("Gerador de Paleta - Harmonia de Cores")
 
 # Color selection
 color = st.color_picker("Escolha uma cor:")
