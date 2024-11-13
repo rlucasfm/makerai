@@ -1,0 +1,18 @@
+credentials:
+  usernames:
+    admin:
+      failed_login_attempts: 0 # Will be managed automatically
+      logged_in: False # Will be managed automatically
+      name: Admin
+      email: admin@admin.com
+      password: $2b$12$GukiMDfjPRPLN0ymNAMS1uvz.A3WgOihsPU.psQd1GTiVi2oMoNqW
+    arthur:
+      failed_login_attempts: 0 # Will be managed automatically
+      logged_in: False # Will be managed automatically
+      name: Arthur Difarda
+      email: arthur@difarda.com
+      password: $2b$12$XcD5CoO2dg5Feo6v4fEw7.NvLcTvSWc59PHNyNBYsmRF0w7Z4yMlm
+cookie:
+  expiry_days: 30
+  key: makerai # Must be string
+  name: makerai
