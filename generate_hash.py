@@ -1,7 +1,7 @@
-import streamlit_authenticator as stauth
+from streamlit_authenticator.utilities.hasher import Hasher
 
-passwords = ['bruna_pass']
+passwords = []
 
-hashed_passwords = stauth.Hasher(passwords).generate()
+hashed_passwords = Hasher(passwords).hash_passwords()
 
 print(hashed_passwords)
