@@ -17,7 +17,7 @@ credentials:
       logged_in: False # Will be managed automatically
       name: Dely Difarda
       email: dely@difarda.com
-      password: $2b$12$.LwGpZENr0TYZQDBCasLF.DC4nHNVzZVOcKuMxZIu2wpA9SjDqNa.
+      password: $2b$12$rO7FPM25NrKdtDWk5pzWWutDW9XUE7Qric4sTWterUXzSffHEMFbu
 cookie:
   expiry_days: 30
   key: makerai # Must be string
