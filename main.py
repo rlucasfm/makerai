@@ -2,9 +2,9 @@ import yaml
 from yaml.loader import SafeLoader
 import streamlit as st
 import streamlit_authenticator as stauth
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 st.set_page_config(page_title="MakerAI by MergeMind", page_icon=":material/home:")
 
