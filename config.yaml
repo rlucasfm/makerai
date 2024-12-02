@@ -12,6 +12,12 @@ credentials:
       name: Arthur Difarda
       email: arthur@difarda.com
       password: $2b$12$XcD5CoO2dg5Feo6v4fEw7.NvLcTvSWc59PHNyNBYsmRF0w7Z4yMlm
+    dely:
+      failed_login_attempts: 0 # Will be managed automatically
+      logged_in: False # Will be managed automatically
+      name: Dely Difarda
+      email: dely@difarda.com
+      password: $2b$12$.LwGpZENr0TYZQDBCasLF.DC4nHNVzZVOcKuMxZIu2wpA9SjDqNa.
 cookie:
   expiry_days: 30
   key: makerai # Must be string
