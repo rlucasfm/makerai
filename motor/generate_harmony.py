@@ -15,6 +15,23 @@ def rgb_to_hex(rgb_color):
         int(rgb_color[2]*255)
     )
     
+# Function to convert RGB to HSL
+def rgb_to_hsl(r, g, b):
+    r, g, b = r / 255.0, g / 255.0, b / 255.0
+    h, s, l = colorsys.rgb_to_hls(r, g, b)
+    h = h * 360  # Convert hue to degrees
+    s = s  # Saturation remains the same
+    l = l  # Lightness remains the same
+    return h, s, l
+
+# Function to convert HSL back to RGB
+def hsl_to_rgb(h, s, l):
+    r, g, b = colorsys.hls_to_rgb(h / 360, l, s)
+    r = int(r * 255)
+    g = int(g * 255)
+    b = int(b * 255)
+    return r, g, b
+    
 def adjust_hue(hue, offset):
     """Ajusta o matiz (hue) garantindo que permaneça no intervalo 0-360."""
     return (hue + offset) % 360
@@ -32,26 +49,62 @@ def generate_palette(base_hex, offsets):
     return hex_colors
 
 def complementary_colors(base_hex):
-    """Gera uma paleta de cores complementar com a mesma relação mostrada na imagem."""
+    """Gera uma paleta de cores complementar com base nos ajustes finos de saturação e brilho."""
     rgb_base = hex_to_rgb(base_hex)
     hsv_base = colorsys.rgb_to_hsv(*rgb_base)
     h_base, s_base, v_base = hsv_base
     
-    # Definindo as proporções da imagem
-    offsets = [0.0, 0.5, -0.1, 0.5, 0.4]  # Ajustando conforme os tons da paleta da imagem
+    # Ajuste dos offsets, saturação e brilho para gerar a paleta de 6 cores
+    offsets = [0.0, 0.2, 0.5, 0.3, 0.55, 0.75]  # Ajustes finos de matiz para cada cor
+    saturation_factors = [1.0, 1.0, 1.0, 0.75, 0.6, 0.4]  # Saturação ajustada para tons vibrantes e mais apagados
+    value_factors = [1.0, 0.85, 1.0, 0.6, 0.45, 0.3]  # Ajuste de brilho (valor)
+
     hex_colors = []
     
-    for offset in offsets:
+    for i, offset in enumerate(offsets):
         h = (h_base + offset) % 1.0
-        rgb = colorsys.hsv_to_rgb(h, s_base, v_base)
+        s = s_base * saturation_factors[i]
+        v = v_base * value_factors[i]
+        
+        # Garantir que os valores de saturação e brilho fiquem dentro do intervalo [0, 1]
+        s = min(1.0, max(0.0, s))
+        v = min(1.0, max(0.0, v))
+        
+        rgb = colorsys.hsv_to_rgb(h, s, v)
         hex_colors.append(rgb_to_hex(rgb))
         
     return hex_colors
 
+
+import colorsys
+
 def analogous_colors(base_hex):
-    """Gera uma paleta de cores análogas com 6 cores."""
-    offsets = [0.0, -1/12.0, 1/12.0, -1/6.0, 1/6.0]
-    return generate_palette(base_hex, offsets)
+    """Generate an analogous color palette with hue shifts and adjustments in saturation and brightness."""
+    rgb_base = hex_to_rgb(base_hex)
+    hsv_base = colorsys.rgb_to_hsv(*rgb_base)
+    h_base, s_base, v_base = hsv_base
+    
+    # Increase the number of shifts to 6 to match the example palette
+    offsets = [0.0, -2/12.0, -1/12.0, 1/12.0, 2/12.0, 3/12.0]  # Adjust hue in small increments for analogous colors
+    saturation_factors = [1.0, 0.85, 0.9, 0.75, 0.85, 1.0]  # Adjust saturation for vibrant and muted tones
+    value_factors = [1.0, 0.85, 0.9, 0.75, 0.9, 1.0]  # Adjust brightness for a cohesive palette
+
+    hex_colors = []
+    
+    for i, offset in enumerate(offsets):
+        h = (h_base + offset) % 1.0  # Apply the hue offset
+        s = s_base * saturation_factors[i]
+        v = v_base * value_factors[i]
+        
+        # Ensure the saturation and brightness values are within bounds [0, 1]
+        s = min(1.0, max(0.0, s))
+        v = min(1.0, max(0.0, v))
+        
+        rgb = colorsys.hsv_to_rgb(h, s, v)
+        hex_colors.append(rgb_to_hex(rgb))
+        
+    return hex_colors
+
 
 def triadic_colors(base_hex):
     """Gera uma paleta de cores tríades com 6 cores."""
@@ -64,9 +117,36 @@ def split_complementary_colors(base_hex):
     return generate_palette(base_hex, offsets)
 
 def square_colors(base_hex):
-    """Gera uma paleta de cores em harmonia quadrada com 6 cores."""
-    offsets = [0.0, 0.25, 0.5, 0.75, 0.0]
-    return generate_palette(base_hex, offsets)
+    """Gera uma paleta de cores específicas a partir da cor base usando offset, saturação e brilho."""
+    # Convertemos a cor base para RGB
+    rgb_base = hex_to_rgb(base_hex)
+    
+    # Convertemos a cor base para HSV
+    hsv_base = colorsys.rgb_to_hsv(*rgb_base)
+    h_base, s_base, v_base = hsv_base
+    
+    # Offsets de matiz e ajustes de saturação e brilho para as cores desejadas
+    offsets = [0.0, 0.25, 0.5, 0.75, 0.6, 0.15]  # Valores ajustados para cada cor
+    saturation_factors = [1.0, 1.0, 1.0, 1.0, 0.8, 8.0]  # Saturação ajustada conforme a imagem
+    value_factors = [1.0, 1.0, 1.0, 1.0, 0.8, 0.7]  # Brilho ajustado conforme a imagem
+    
+    hex_colors = []
+    
+    for i, offset in enumerate(offsets):
+        h = (h_base + offset) % 1.0  # Ajuste de matiz
+        s = s_base * saturation_factors[i]  # Ajuste de saturação
+        v = v_base * value_factors[i]  # Ajuste de brilho
+        
+        # Garantir que os valores de saturação e brilho fiquem dentro do intervalo [0, 1]
+        s = min(1.0, max(0.0, s))
+        v = min(1.0, max(0.0, v))
+        
+        # Convertendo de volta para RGB e depois para Hex
+        rgb = colorsys.hsv_to_rgb(h, s, v)
+        hex_colors.append(rgb_to_hex(rgb))
+    
+    return hex_colors
+
 
 def compound_colors(base_hex):
     """Gera uma paleta de cores composta com 6 cores."""
