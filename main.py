@@ -32,6 +32,7 @@ if st.session_state['authentication_status']:
 
     palete_generator = st.Page("modules/palete_generator.py", title="Palete Generator", icon=":material/strategy:")
     moodboard = st.Page("modules/moodboard.py", title="Moodboard", icon=":material/strategy:")
+    concept_creator = st.Page("modules/concept_creator.py", title="Concept Creator", icon=":material/lightbulb:")
 
-    pg = st.navigation([palete_generator, moodboard])
+    pg = st.navigation([palete_generator, moodboard, concept_creator])
     pg.run()
