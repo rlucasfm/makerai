@@ -9,5 +9,5 @@ def internet_search(query: str):
 internet_search_tool = FunctionTool.from_defaults(
     fn=internet_search,
     name="Internet_search",
-    description="this tool makes a search on the internet for any topic"
+    description="this tool makes a search on the internet for any topic, with the given input"
 )

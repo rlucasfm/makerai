@@ -1,10 +1,11 @@
 import streamlit as st
 
 from motor.agents.Concepter import ConcepterAgent
+from motor.tools.internet_search_tool import internet_search_tool
 
 st.title("Concepter - Criador de Conceitos")
 
-concept_agent = ConcepterAgent()
+concept_agent = ConcepterAgent(tools=[internet_search_tool], max_iterations=7, verbose=True)
 
 if 'messages' not in st.session_state:
     st.session_state.messages = [{"role": "assistant", "content": "Vamos começar! Me fale um pouco mais sobre este projeto. Quais informações, objetivos e comentários importantes você pode me dizer?"}]
@@ -16,7 +17,8 @@ def generate_response(user_input):
     s_agent = concept_agent.agent
     try:
         return s_agent.chat(user_input).response
-    except:
+    except Exception as e:
+        print(e)
         return "Tente novamente..."
 
 user_input = st.chat_input("Digite sua mensagem: ")
